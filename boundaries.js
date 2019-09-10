@@ -47,7 +47,7 @@
     function checkBoundariesTop2() {
       if(gameState.player2.y === 0) {
         gameState.player2.y = config.height - 1;
-        gameState.movePlayer2.y -= 1;   
+        gameState.player2.y -= 1;   
       } else {
         gameState.player2.y -=1;
       }
