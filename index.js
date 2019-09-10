@@ -28,6 +28,7 @@ function preload(){
   this.load.image("curveBottomRight", 'assets/worm_animation/snake_curve_bottom_right.png')
   this.load.image("curveTopLeft", 'assets/worm_animation/snake_curve_top_left.png')
   this.load.image("curveTopRight", 'assets/worm_animation/snake_curve_top_right.png')
+  this.load.image("food", "assets/food/Food.png")
   
 }
 
@@ -42,6 +43,12 @@ function create(){
 
   gameState.player2 = this.add.sprite(100,100, 'headDown');
   
+  gameState.food = this.add.sprite(Phaser.Math.Between(0,500),Phaser.Math.Between(0,500), 'food')
+  
+  //create a group to hold foods
+  //doesn't do anything yet, but later we can add different kinds of food to this
+  this.foodgroup = this.game.add.group();
+
   gameState.cursors = this.input.keyboard.createCursorKeys();
   gameState.wasd = this.input.keyboard.addKeys(
     {
@@ -152,8 +159,8 @@ function update() {
 //---------------------------config--object that contains game info---------------------------------------
 
 const config = {
-  width: 1000,
-  height: 1000,
+  width: 500,
+  height: 500,
   backgroundColor: 0xdda0dd,
   scene: {
     preload,
