@@ -165,11 +165,12 @@ const config = {
   scene: {
     preload,
     create,
-    update
+    update,
+    gameScene
   },
 };
 
 //newPhaser.game
 const game = new Phaser.Game(config);
-
+const gameScene = new Phaser.Scene('Title');
 
