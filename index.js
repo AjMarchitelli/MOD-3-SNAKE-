@@ -202,7 +202,7 @@ var config = {
   type: Phaser.WEBGL,
   width: 640,
   height: 480,
-  backgroundColor: '#bfcc00',
+  backgroundColor: '#7FC08B',
   parent: 'phaser-example',
   scene: {
     preload: preload,
@@ -212,8 +212,10 @@ var config = {
 };
 
 var snake;
+var snake_two;
 var food;
-var cursors;
+var cursors_for_snake1;
+var cursors_for_snake2;
 
 //  Direction consts
 var UP = 0;
@@ -225,7 +227,6 @@ var game = new Phaser.Game(config);
 
 function preload() {
   this.load.image('food', 'assets/games/snake/rabbit.png');
-  this.load.image('body', 'assets/games/snake/body.png');
   this.load.image('headUp', 'assets/worm_animation/snake_head_up.png')
   this.load.image("headDown", 'assets/worm_animation/snake_head_down.png')
   this.load.image("headLeft", 'assets/worm_animation/snake_head_left.png')
@@ -276,7 +277,7 @@ function create() {
 
         this.body = scene.add.group();
 
-        this.head = this.body.create(x * 16, y * 16, 'body');
+        this.head = this.body.create(x * 16, y * 16, 'headRight');
         this.head.setOrigin(0);
 
         this.alive = true;
@@ -290,6 +291,7 @@ function create() {
         this.heading = RIGHT;
         this.direction = RIGHT;
       },
+
 
     update: function (time) {
       if (time >= this.moveTime) {
@@ -322,13 +324,7 @@ function create() {
     },
 
     move: function (time) {
-      /**
-      * Based on the heading property (which is the direction the pgroup pressed)
-      * we update the headPosition value accordingly.
-      * 
-      * The Math.wrap call allow the snake to wrap around the screen, so when
-      * it goes off any of the sides it re-appears on the other.
-      */
+    
       switch (this.heading) {
         case LEFT:
           this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 40);
@@ -373,7 +369,7 @@ function create() {
     },
 
     grow: function () {
-      var newPart = this.body.create(this.tail.x, this.tail.y, 'body');
+      var newPart = this.body.create(this.tail.x, this.tail.y, 'bodyHorizontal');
 
       newPart.setOrigin(0);
     },
@@ -416,32 +412,121 @@ function create() {
 
   snake = new Snake(this, 8, 8);
 
+  snake_two = new Snake(this, 10, 10);
+  
+  
   //  Create our keyboard controls
-  cursors = this.input.keyboard.createCursorKeys();
+  
+  cursors_for_snake1 = this.input.keyboard.createCursorKeys();
+  
+  cursors_for_snake2 = this.input.keyboard.addKeys(
+    {
+      up: Phaser.Input.Keyboard.KeyCodes.W,
+      down: Phaser.Input.Keyboard.KeyCodes.S,
+      left: Phaser.Input.Keyboard.KeyCodes.A,
+      right: Phaser.Input.Keyboard.KeyCodes.D,
+    }
+  )
+
 }
 
+
+
 function update(time, delta) {
-  if (!snake.alive) {
+  
+// snake2
+
+  if (!snake_two.alive || !snake.alive) {
     return;
   }
 
-  /**
-  * Check which key is pressed, and then change the direction the snake
-  * is heading based on that. The checks ensure you don't double-back
-  * on yourself, for example if you're moving to the right and you press
-  * the LEFT cursor, it ignores it, because the only valid directions you
-  * can move in at that time is up and down.
-  */
-  if (cursors.left.isDown) {
+  if (cursors_for_snake2.left.isDown) {
+    snake_two.faceLeft();
+  }
+  else if (cursors_for_snake2.right.isDown) {
+    snake_two.faceRight();
+  }
+  else if (cursors_for_snake2.up.isDown) {
+    snake_two.faceUp();
+  }
+  else if (cursors_for_snake2.down.isDown) {
+    snake_two.faceDown();
+  }
+
+  if (snake_two.update(time)) {
+    //  If the snake updated, we need to check for collision against food
+
+    if (snake_two.collideWithFood(food)) {
+      repositionFood();
+    }
+  }
+
+
+/**
+* We can place the food anywhere in our 40x30 grid
+* *except* on-top of the snake, so we need
+* to filter those out of the possible food locations.
+* If there aren't any locations left, they've won!
+*
+* @method repositionFood
+* @return {boolean} true if the food was placed, otherwise false
+*/
+function repositionFood() {
+  //  First create an array that assumes all positions
+  //  are valid for the new piece of food
+
+  //  A Grid we'll use to reposition the food each time it's eaten
+  var testGrid = [];
+
+  for (var y = 0; y < 30; y++) {
+    testGrid[y] = [];
+
+    for (var x = 0; x < 40; x++) {
+      testGrid[y][x] = true;
+    }
+  }
+
+  snake_two.updateGrid(testGrid);
+
+  //  Purge out false positions
+  var validLocations = [];
+
+  for (var y = 0; y < 30; y++) {
+    for (var x = 0; x < 40; x++) {
+      if (testGrid[y][x] === true) {
+        //  Is this position valid for food? If so, add it here ...
+        validLocations.push({ x: x, y: y });
+      }
+    }
+  }
+
+  if (validLocations.length > 0) {
+    //  Use the RNG to pick a random food position
+    var pos = Phaser.Math.RND.pick(validLocations);
+
+    //  And place it
+    food.setPosition(pos.x * 16, pos.y * 16);
+
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+  // snake1
+
+  
+  if (cursors_for_snake1.left.isDown) {
     snake.faceLeft();
   }
-  else if (cursors.right.isDown) {
+  else if (cursors_for_snake1.right.isDown) {
     snake.faceRight();
   }
-  else if (cursors.up.isDown) {
+  else if (cursors_for_snake1.up.isDown) {
     snake.faceUp();
   }
-  else if (cursors.down.isDown) {
+  else if (cursors_for_snake1.down.isDown) {
     snake.faceDown();
   }
 
@@ -452,7 +537,7 @@ function update(time, delta) {
       repositionFood();
     }
   }
-}
+
 
 /**
 * We can place the food anywhere in our 40x30 grid
@@ -504,4 +589,5 @@ function repositionFood() {
   else {
     return false;
   }
+}
 }
