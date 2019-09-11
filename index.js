@@ -202,7 +202,7 @@ var config = {
   type: Phaser.WEBGL,
   width: 640,
   height: 480,
-  backgroundColor: '#7FC08B',
+  backgroundColor: '#bfcc00',
   parent: 'phaser-example',
   scene: {
     preload: preload,
@@ -225,6 +225,7 @@ var game = new Phaser.Game(config);
 
 function preload() {
   this.load.image('food', 'assets/games/snake/rabbit.png');
+  this.load.image('body', 'assets/games/snake/body.png');
   this.load.image('headUp', 'assets/worm_animation/snake_head_up.png')
   this.load.image("headDown", 'assets/worm_animation/snake_head_down.png')
   this.load.image("headLeft", 'assets/worm_animation/snake_head_left.png')
@@ -239,7 +240,6 @@ function preload() {
   this.load.image("curveBottomRight", 'assets/worm_animation/snake_curve_bottom_right.png')
   this.load.image("curveTopLeft", 'assets/worm_animation/snake_curve_top_left.png')
   this.load.image("curveTopRight", 'assets/worm_animation/snake_curve_top_right.png')
-
 }
 
 function create() {
@@ -276,7 +276,7 @@ function create() {
 
         this.body = scene.add.group();
 
-        this.head = this.body.create(x * 16, y * 16, 'headUp');
+        this.head = this.body.create(x * 16, y * 16, 'body');
         this.head.setOrigin(0);
 
         this.alive = true;
@@ -331,8 +331,6 @@ function create() {
       */
       switch (this.heading) {
         case LEFT:
-          // debugger
-          // this.snake.head.setTexture("")
           this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 40);
           break;
 
