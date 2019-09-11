@@ -1,19 +1,230 @@
-gameState = {};
+// gameState = {};
 
-var down1;
-var down2;
-var up1;
-var up2;
-var left1;
-var left2;
-var right1;
-var right2;
+// var down1;
+// var down2;
+// var up1;
+// var up2;
+// var left1;
+// var left2;
+// var right1;
+// var right2;
+// var numSnakeSections = 2; //number of snake body sections
+// var snakeSpacer = 16;
+// var snakeSection = new Array(); //array of sprites that make the snake body sections
+// var snakePath = new Array(); 
 
-//--------------------------preload--loads in assets--gameState object------------------------------
+// //--------------------------preload--loads in assets--gameState object------------------------------
 
-function preload(){
+// function preload(){
 
-  // this.load.image('player1', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/codey.png')
+//   this.load.image('headUp', 'assets/worm_animation/snake_head_up.png')
+//   this.load.image("headDown", 'assets/worm_animation/snake_head_down.png')
+//   this.load.image("headLeft", 'assets/worm_animation/snake_head_left.png')
+//   this.load.image("headRight", 'assets/worm_animation/snake_head_right.png')
+//   this.load.image("tailDown", 'assets/worm_animation/snake_tail_down.png')
+//   this.load.image("tailUp", 'assets/worm_animation/snake_tail_up.png')
+//   this.load.image("tailLeft", 'assets/worm_animation/snake_tail_left.png')
+//   this.load.image("tailRight", 'assets/worm_animation/snake_tail_right.png')
+//   this.load.image("bodyHorizontal", 'assets/worm_animation/snake_body_horizontal.png')
+//   this.load.image("bodyVertical", 'assets/worm_animation/snake_body_vertical.png')
+//   this.load.image("curveBottomLeft", 'assets/worm_animation/snake_curve_bottom_left.png')
+//   this.load.image("curveBottomRight", 'assets/worm_animation/snake_curve_bottom_right.png')
+//   this.load.image("curveTopLeft", 'assets/worm_animation/snake_curve_top_left.png')
+//   this.load.image("curveTopRight", 'assets/worm_animation/snake_curve_top_right.png')
+  
+// }
+
+
+// //-------------------------create--creates game sprites,images,etc--------------------------------
+// //create--creates game sprites,images,etc
+
+// function create(){
+
+//   gameState.player1 = this.add.sprite(30,60, 'headUp');
+//   debugger
+//   gameState.player1.anchor.setTo(0.5, 0.5);
+  
+
+//   for (var i = 1; i <= numSnakeSections - 1; i++) {
+//     snakeSection[i] = game.add.sprite(400, 300, 'bodyVertical');
+//     snakeSection[i].anchor.setTo(0.5, 0.5);
+//   }
+
+//   //  Init snakePath array
+//   for (var i = 0; i <= numSnakeSections * snakeSpacer; i++) {
+//     snakePath[i] = new Phaser.Point(400, 300);
+//   }
+
+
+
+//   gameState.player2 = this.add.sprite(100,100, 'headDown');
+  
+//   gameState.cursors = this.input.keyboard.createCursorKeys();
+//   gameState.wasd = this.input.keyboard.addKeys(
+//     {
+//       up: Phaser.Input.Keyboard.KeyCodes.W,
+//       down: Phaser.Input.Keyboard.KeyCodes.S,
+//       left: Phaser.Input.Keyboard.KeyCodes.A,
+//       right: Phaser.Input.Keyboard.KeyCodes.D,
+//     }
+//   )
+//   }
+
+
+// //---------------------------update--updates constantly,setIn-----------------------------------------
+
+// function update() {
+
+//     if(gameState.cursors.down.isDown) {
+//       gameState.player1.direction = "Down";
+//       stopInterval1();
+//       movePlayer1();
+//     }	else if (gameState.cursors.up.isDown) {
+//       gameState.player1.direction = "Up";
+//       stopInterval1();
+//       movePlayer1();
+//     } else if (gameState.cursors.left.isDown) {
+//       gameState.player1.direction = "Left";
+//       stopInterval1();
+//       movePlayer1();
+//     } else if (gameState.cursors.right.isDown) {
+//       gameState.player1.direction = "Right";
+//       stopInterval1();
+//       movePlayer1();
+//     }
+
+//     if(gameState.wasd.down.isDown) {
+//       gameState.player2.direction = "Down";
+//       stopInterval2();
+//       movePlayer2();
+//     }	else if (gameState.wasd.up.isDown) {
+//       gameState.player2.direction = "Up";
+//       stopInterval2();
+//       movePlayer2();
+//     } else if (gameState.wasd.left.isDown) {
+//       gameState.player2.direction = "Left";
+//       stopInterval2();
+//       movePlayer2();
+//     } else if (gameState.wasd.right.isDown) {
+//       gameState.player2.direction = "Right";
+//       stopInterval2();
+//       movePlayer2();
+//     }
+
+//   function movePlayer1() {
+//     if(gameState.player1.direction === "Down") {
+//       gameState.player1.setTexture('headDown')
+      
+//       down1 = setInterval(function(){ checkBoundariesBottom1() }, 7);
+//       down1;
+//     } else if(gameState.player1.direction === "Up") {
+//       gameState.player1.setTexture('headUp')
+//       up1 = setInterval(function(){ checkBoundariesTop1() }, 7);
+//       up1;
+//     } else if(gameState.player1.direction === "Left") {
+//       gameState.player1.setTexture('headLeft')
+//       left1 = setInterval(function(){ checkBoundariesLeft1() }, 7);
+//       left1;
+//     } else if(gameState.player1.direction === "Right") {
+//       gameState.player1.setTexture('headRight')
+//       right1 = setInterval(function(){ checkBoundariesRight1() }, 7);
+//       right1;
+//     }
+//   }
+
+//   function movePlayer2() {
+//     if(gameState.player2.direction === "Down") {
+
+
+//       var part = snakePath.pop();
+
+//       part.setTo(snakeHead.x, snakeHead.y);
+
+//       snakePath.unshift(part);
+
+//       for (var i = 1; i <= numSnakeSections - 1; i++) {
+//         snakeSection[i].x = (snakePath[i * snakeSpacer]).x;
+//         snakeSection[i].y = (snakePath[i * snakeSpacer]).y;
+//       }
+
+
+
+//       gameState.player2.setTexture('headDown')
+//       down2 = setInterval(function(){ checkBoundariesBottom2() }, 7);
+//       down2;
+//     } else if(gameState.player2.direction === "Up") {
+//       gameState.player2.setTexture('headUp')
+//       up2 = setInterval(function(){ checkBoundariesTop2() }, 7);
+//       up2;
+//     } else if(gameState.player2.direction === "Left") {
+//       gameState.player2.setTexture('headLeft')
+//       left2 = setInterval(function(){ checkBoundariesLeft2() }, 7);
+//       left2;
+//     } else if(gameState.player2.direction === "Right") {
+//       gameState.player2.setTexture('headRight')
+//       right2 = setInterval(function(){ checkBoundariesRight2() }, 7);
+//       right2;
+//     }
+//   }
+
+
+//   function stopInterval1() {
+//     clearInterval(down1);
+//     clearInterval(up1);
+//     clearInterval(left1);
+//     clearInterval(right1);
+//   }
+
+//   function stopInterval2() {
+//     clearInterval(down2);
+//     clearInterval(up2);
+//     clearInterval(left2);
+//     clearInterval(right2);
+//   }
+// }
+// //---------------------------config--object that contains game info---------------------------------------
+
+// const config = {
+//   width: 1000,
+//   height: 1000,
+//   backgroundColor: 0xdda0dd,
+//   scene: {
+//     preload,
+//     create,
+//     update
+//   },
+// };
+
+// //newPhaser.game
+// const game = new Phaser.Game(config);
+
+var config = {
+  type: Phaser.WEBGL,
+  width: 640,
+  height: 480,
+  backgroundColor: '#7FC08B',
+  parent: 'phaser-example',
+  scene: {
+    preload: preload,
+    create: create,
+    update: update
+  }
+};
+
+var snake;
+var food;
+var cursors;
+
+//  Direction consts
+var UP = 0;
+var DOWN = 1;
+var LEFT = 2;
+var RIGHT = 3;
+
+var game = new Phaser.Game(config);
+
+function preload() {
+  this.load.image('food', 'assets/games/snake/rabbit.png');
   this.load.image('headUp', 'assets/worm_animation/snake_head_up.png')
   this.load.image("headDown", 'assets/worm_animation/snake_head_down.png')
   this.load.image("headLeft", 'assets/worm_animation/snake_head_left.png')
@@ -28,141 +239,271 @@ function preload(){
   this.load.image("curveBottomRight", 'assets/worm_animation/snake_curve_bottom_right.png')
   this.load.image("curveTopLeft", 'assets/worm_animation/snake_curve_top_left.png')
   this.load.image("curveTopRight", 'assets/worm_animation/snake_curve_top_right.png')
-  
+
 }
 
+function create() {
+  var Food = new Phaser.Class({
 
-//-------------------------create--creates game sprites,images,etc--------------------------------
-//create--creates game sprites,images,etc
+    Extends: Phaser.GameObjects.Image,
 
-function create(){
+    initialize:
 
+      function Food(scene, x, y) {
+        Phaser.GameObjects.Image.call(this, scene)
 
-  gameState.player1 = this.add.sprite(30,60,'headUp');
+        this.setTexture('food');
+        this.setPosition(x * 16, y * 16);
+        this.setOrigin(0);
 
-  gameState.player2 = this.add.sprite(100,100, 'headDown');
-  
-  gameState.cursors = this.input.keyboard.createCursorKeys();
-  gameState.wasd = this.input.keyboard.addKeys(
-    {
-      up: Phaser.Input.Keyboard.KeyCodes.W,
-      down: Phaser.Input.Keyboard.KeyCodes.S,
-      left: Phaser.Input.Keyboard.KeyCodes.A,
-      right: Phaser.Input.Keyboard.KeyCodes.D,
+        this.total = 0;
+
+        scene.children.add(this);
+      },
+
+    eat: function () {
+      this.total++;
     }
-  )
+
+  });
+
+  var Snake = new Phaser.Class({
+
+    initialize:
+
+      function Snake(scene, x, y) {
+        this.headPosition = new Phaser.Geom.Point(x, y);
+
+        this.body = scene.add.group();
+
+        this.head = this.body.create(x * 16, y * 16, 'headUp');
+        this.head.setOrigin(0);
+
+        this.alive = true;
+
+        this.speed = 100;
+
+        this.moveTime = 0;
+
+        this.tail = new Phaser.Geom.Point(x, y);
+
+        this.heading = RIGHT;
+        this.direction = RIGHT;
+      },
+
+    update: function (time) {
+      if (time >= this.moveTime) {
+        return this.move(time);
+      }
+    },
+
+    faceLeft: function () {
+      if (this.direction === UP || this.direction === DOWN) {
+        this.heading = LEFT;
+      }
+    },
+
+    faceRight: function () {
+      if (this.direction === UP || this.direction === DOWN) {
+        this.heading = RIGHT;
+      }
+    },
+
+    faceUp: function () {
+      if (this.direction === LEFT || this.direction === RIGHT) {
+        this.heading = UP;
+      }
+    },
+
+    faceDown: function () {
+      if (this.direction === LEFT || this.direction === RIGHT) {
+        this.heading = DOWN;
+      }
+    },
+
+    move: function (time) {
+      /**
+      * Based on the heading property (which is the direction the pgroup pressed)
+      * we update the headPosition value accordingly.
+      * 
+      * The Math.wrap call allow the snake to wrap around the screen, so when
+      * it goes off any of the sides it re-appears on the other.
+      */
+      switch (this.heading) {
+        case LEFT:
+          // debugger
+          // this.snake.head.setTexture("")
+          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 40);
+          break;
+
+        case RIGHT:
+          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, 40);
+          break;
+
+        case UP:
+          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, 30);
+          break;
+
+        case DOWN:
+          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, 30);
+          break;
+      }
+
+      this.direction = this.heading;
+
+      //  Update the body segments and place the last coordinate into this.tail
+      Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 16, this.headPosition.y * 16, 1, this.tail);
+
+      //  Check to see if any of the body pieces have the same x/y as the head
+      //  If they do, the head ran into the body
+
+      var hitBody = Phaser.Actions.GetFirst(this.body.getChildren(), { x: this.head.x, y: this.head.y }, 1);
+
+      if (hitBody) {
+        console.log('dead');
+
+        this.alive = false;
+
+        return false;
+      }
+      else {
+        //  Update the timer ready for the next movement
+        this.moveTime = time + this.speed;
+
+        return true;
+      }
+    },
+
+    grow: function () {
+      var newPart = this.body.create(this.tail.x, this.tail.y, 'body');
+
+      newPart.setOrigin(0);
+    },
+
+    collideWithFood: function (food) {
+      if (this.head.x === food.x && this.head.y === food.y) {
+        this.grow();
+
+        food.eat();
+
+        //  For every 5 items of food eaten we'll increase the snake speed a little
+        if (this.speed > 20 && food.total % 5 === 0) {
+          this.speed -= 5;
+        }
+
+        return true;
+      }
+      else {
+        return false;
+      }
+    },
+
+    updateGrid: function (grid) {
+      //  Remove all body pieces from valid positions list
+      this.body.children.each(function (segment) {
+
+        var bx = segment.x / 16;
+        var by = segment.y / 16;
+
+        grid[by][bx] = false;
+
+      });
+
+      return grid;
+    }
+
+  });
+
+  food = new Food(this, 3, 4);
+
+  snake = new Snake(this, 8, 8);
+
+  //  Create our keyboard controls
+  cursors = this.input.keyboard.createCursorKeys();
+}
+
+function update(time, delta) {
+  if (!snake.alive) {
+    return;
   }
 
-
-//---------------------------update--updates constantly,setIn-----------------------------------------
-
-function update() {
-
-    if(gameState.cursors.down.isDown) {
-      gameState.player1.direction = "Down";
-      stopInterval1();
-      movePlayer1();
-    }	else if (gameState.cursors.up.isDown) {
-      gameState.player1.direction = "Up";
-      stopInterval1();
-      movePlayer1();
-    } else if (gameState.cursors.left.isDown) {
-      gameState.player1.direction = "Left";
-      stopInterval1();
-      movePlayer1();
-    } else if (gameState.cursors.right.isDown) {
-      gameState.player1.direction = "Right";
-      stopInterval1();
-      movePlayer1();
-    }
-
-    if(gameState.wasd.down.isDown) {
-      gameState.player2.direction = "Down";
-      stopInterval2();
-      movePlayer2();
-    }	else if (gameState.wasd.up.isDown) {
-      gameState.player2.direction = "Up";
-      stopInterval2();
-      movePlayer2();
-    } else if (gameState.wasd.left.isDown) {
-      gameState.player2.direction = "Left";
-      stopInterval2();
-      movePlayer2();
-    } else if (gameState.wasd.right.isDown) {
-      gameState.player2.direction = "Right";
-      stopInterval2();
-      movePlayer2();
-    }
-
-  function movePlayer1() {
-    if(gameState.player1.direction === "Down") {
-      gameState.player1.setTexture('headDown')
-      down1 = setInterval(function(){ checkBoundariesBottom1() }, 7);
-      down1;
-    } else if(gameState.player1.direction === "Up") {
-      gameState.player1.setTexture('headUp')
-      up1 = setInterval(function(){ checkBoundariesTop1() }, 7);
-      up1;
-    } else if(gameState.player1.direction === "Left") {
-      gameState.player1.setTexture('headLeft')
-      left1 = setInterval(function(){ checkBoundariesLeft1() }, 7);
-      left1;
-    } else if(gameState.player1.direction === "Right") {
-      gameState.player1.setTexture('headRight')
-      right1 = setInterval(function(){ checkBoundariesRight1() }, 7);
-      right1;
-    }
+  /**
+  * Check which key is pressed, and then change the direction the snake
+  * is heading based on that. The checks ensure you don't double-back
+  * on yourself, for example if you're moving to the right and you press
+  * the LEFT cursor, it ignores it, because the only valid directions you
+  * can move in at that time is up and down.
+  */
+  if (cursors.left.isDown) {
+    snake.faceLeft();
+  }
+  else if (cursors.right.isDown) {
+    snake.faceRight();
+  }
+  else if (cursors.up.isDown) {
+    snake.faceUp();
+  }
+  else if (cursors.down.isDown) {
+    snake.faceDown();
   }
 
-  function movePlayer2() {
-    if(gameState.player2.direction === "Down") {
-      gameState.player2.setTexture('headDown')
-      down2 = setInterval(function(){ checkBoundariesBottom2() }, 7);
-      down2;
-    } else if(gameState.player2.direction === "Up") {
-      gameState.player2.setTexture('headUp')
-      up2 = setInterval(function(){ checkBoundariesTop2() }, 7);
-      up2;
-    } else if(gameState.player2.direction === "Left") {
-      gameState.player2.setTexture('headLeft')
-      left2 = setInterval(function(){ checkBoundariesLeft2() }, 7);
-      left2;
-    } else if(gameState.player2.direction === "Right") {
-      gameState.player2.setTexture('headRight')
-      right2 = setInterval(function(){ checkBoundariesRight2() }, 7);
-      right2;
+  if (snake.update(time)) {
+    //  If the snake updated, we need to check for collision against food
+
+    if (snake.collideWithFood(food)) {
+      repositionFood();
     }
-  }
-
-
-  function stopInterval1() {
-    clearInterval(down1);
-    clearInterval(up1);
-    clearInterval(left1);
-    clearInterval(right1);
-  }
-
-  function stopInterval2() {
-    clearInterval(down2);
-    clearInterval(up2);
-    clearInterval(left2);
-    clearInterval(right2);
   }
 }
-//---------------------------config--object that contains game info---------------------------------------
 
-const config = {
-  width: 1000,
-  height: 1000,
-  backgroundColor: 0xdda0dd,
-  scene: {
-    preload,
-    create,
-    update
-  },
-};
+/**
+* We can place the food anywhere in our 40x30 grid
+* *except* on-top of the snake, so we need
+* to filter those out of the possible food locations.
+* If there aren't any locations left, they've won!
+*
+* @method repositionFood
+* @return {boolean} true if the food was placed, otherwise false
+*/
+function repositionFood() {
+  //  First create an array that assumes all positions
+  //  are valid for the new piece of food
 
-//newPhaser.game
-const game = new Phaser.Game(config);
+  //  A Grid we'll use to reposition the food each time it's eaten
+  var testGrid = [];
 
+  for (var y = 0; y < 30; y++) {
+    testGrid[y] = [];
 
+    for (var x = 0; x < 40; x++) {
+      testGrid[y][x] = true;
+    }
+  }
+
+  snake.updateGrid(testGrid);
+
+  //  Purge out false positions
+  var validLocations = [];
+
+  for (var y = 0; y < 30; y++) {
+    for (var x = 0; x < 40; x++) {
+      if (testGrid[y][x] === true) {
+        //  Is this position valid for food? If so, add it here ...
+        validLocations.push({ x: x, y: y });
+      }
+    }
+  }
+
+  if (validLocations.length > 0) {
+    //  Use the RNG to pick a random food position
+    var pos = Phaser.Math.RND.pick(validLocations);
+
+    //  And place it
+    food.setPosition(pos.x * 16, pos.y * 16);
+
+    return true;
+  }
+  else {
+    return false;
+  }
+}
