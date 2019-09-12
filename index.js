@@ -221,6 +221,7 @@ var cursors_for_snake1;
 var cursors_for_snake2;
 var snakeHitSnake2; 
 var snake2HitSnake;
+var text;
 
 //  Direction consts
 var UP = 0;
@@ -420,12 +421,9 @@ function create() {
 
   snake_two = new Snake(this, 20, 20);
 
-  this.physics.add.overlap(snake.head, snake_two.head)
 
-  // this.physics.add.collide(snake, snake_two, collideCallback(), this);
-  
+  text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
 
-  //  Create our keyboard controls
   
   cursors_for_snake1 = this.input.keyboard.createCursorKeys();
   
@@ -457,7 +455,18 @@ function update(time, delta) {
 
 // snake2
 
+
   if (!snake_two.alive || !snake.alive) {
+    var score_snake_two = snake_two.body.children.entries.length
+    var score_snake_one = snake.body.children.entries.length
+
+    if (score_snake_two > score_snake_one){
+      line = `Snake 2 Wins! Score: ${score_snake_two}`
+      text.setText(line);
+    } else {
+      line = `Snake 1 Wins! Score: ${score_snake_one}`
+      text.setText(line);
+    }
     return;
   }
 
