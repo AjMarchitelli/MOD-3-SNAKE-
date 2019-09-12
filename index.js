@@ -204,6 +204,9 @@ var config = {
   height: 480,
   backgroundColor: '#7FC08B',
   parent: 'phaser-example',
+  physics: {
+    default: "arcade"
+  },
   scene: {
     preload: preload,
     create: create,
@@ -216,6 +219,8 @@ var snake_two;
 var food;
 var cursors_for_snake1;
 var cursors_for_snake2;
+var snakeHitSnake2; 
+var snake2HitSnake;
 
 //  Direction consts
 var UP = 0;
@@ -241,6 +246,7 @@ function preload() {
   this.load.image("curveBottomRight", 'assets/worm_animation/snake_curve_bottom_right.png')
   this.load.image("curveTopLeft", 'assets/worm_animation/snake_curve_top_left.png')
   this.load.image("curveTopRight", 'assets/worm_animation/snake_curve_top_right.png')
+  this.load.image("curveTopRight", 'assets/ground_tiles/grass.jpg')
 }
 
 function create() {
@@ -258,16 +264,18 @@ function create() {
         this.setOrigin(0);
 
         this.total = 0;
-
+        
         scene.children.add(this);
       },
-
-    eat: function () {
-      this.total++;
-    }
-
-  });
-
+      
+      eat: function () {
+        this.total++;
+      }
+      
+    });
+    
+    
+    snakes = []
   var Snake = new Phaser.Class({
 
     initialize:
@@ -350,22 +358,20 @@ function create() {
 
       //  Check to see if any of the body pieces have the same x/y as the head
       //  If they do, the head ran into the body
+      
+        var hitBody = Phaser.Actions.GetFirst(this.body.getChildren(), { x: this.head.x, y: this.head.y }, 1);
+        if (hitBody) {
+          console.log('dead');
 
-      var hitBody = Phaser.Actions.GetFirst(this.body.getChildren(), { x: this.head.x, y: this.head.y }, 1);
+          this.alive = false;
 
-      if (hitBody) {
-        console.log('dead');
+          return false;
+        } else {
+          //  Update the timer ready for the next movement
+          this.moveTime = time + this.speed;
 
-        this.alive = false;
-
-        return false;
-      }
-      else {
-        //  Update the timer ready for the next movement
-        this.moveTime = time + this.speed;
-
-        return true;
-      }
+          return true;
+        }
     },
 
     grow: function () {
@@ -412,9 +418,13 @@ function create() {
 
   snake = new Snake(this, 8, 8);
 
-  snake_two = new Snake(this, 10, 10);
+  snake_two = new Snake(this, 20, 20);
+
+  this.physics.add.overlap(snake.head, snake_two.head)
+
+  // this.physics.add.collide(snake, snake_two, collideCallback(), this);
   
-  
+
   //  Create our keyboard controls
   
   cursors_for_snake1 = this.input.keyboard.createCursorKeys();
@@ -430,15 +440,27 @@ function create() {
 
 }
 
-
-
 function update(time, delta) {
-  
+  if (snake.head.x === snake_two.head.x && snake.head.y === snake_two.head.y) {
+    snake.alive = false;
+    snake_two.alive = false
+  }
+
+  snake.body.children.entries.forEach(bodyPart => {
+    snake_two.body.children.entries.forEach(bodyPart2 => {
+      if (bodyPart.x === bodyPart2.x && bodyPart.y === bodyPart2.y) {
+        snake.alive = false;
+        snake_two.alive = false
+      }
+    })
+  })
+
 // snake2
 
   if (!snake_two.alive || !snake.alive) {
     return;
   }
+
 
   if (cursors_for_snake2.left.isDown) {
     snake_two.faceLeft();
