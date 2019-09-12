@@ -222,6 +222,7 @@ var cursors_for_snake2;
 var snakeHitSnake2; 
 var snake2HitSnake;
 var text;
+var bomb;
 
 //  Direction consts
 var UP = 0;
@@ -248,6 +249,7 @@ function preload() {
   this.load.image("curveTopLeft", 'assets/worm_animation/snake_curve_top_left.png')
   this.load.image("curveTopRight", 'assets/worm_animation/snake_curve_top_right.png')
   this.load.image("curveTopRight", 'assets/ground_tiles/grass.jpg')
+  this.load.image("bomb", 'assets/snake/151.png')
 }
 
 function create() {
@@ -260,7 +262,7 @@ function create() {
       function Food(scene, x, y) {
         Phaser.GameObjects.Image.call(this, scene)
 
-        this.setTexture('food');
+        this.setTexture('bomb');
         this.setPosition(x * 16, y * 16);
         this.setOrigin(0);
 
@@ -420,6 +422,8 @@ function create() {
   snake = new Snake(this, 8, 8);
 
   snake_two = new Snake(this, 20, 20);
+
+  // bomb = new Food(this, 7, 18)
 
 
   text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
