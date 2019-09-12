@@ -202,7 +202,7 @@ var config = {
   type: Phaser.WEBGL,
   width: 640,
   height: 480,
-  backgroundColor: '#7FC08B',
+  backgroundColor: '#5F738A',
   parent: 'phaser-example',
   physics: {
     default: "arcade"
@@ -480,12 +480,13 @@ function create() {
   // bomb = new Food(this, 7, 18)
 
 
-  text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
-  text2 = this.add.text(0, 30, '', { font: "16pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
+  text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "white", stroke: "#119f4e", strokeThickness: 2 });
+  text2 = this.add.text(0, 30, '', { font: "16pt Courier", fill: "white", stroke: "#119f4e", strokeThickness: 2 });
 
-  text_snake_one = this.add.text(0, 0, '', { font: "10pt Courier", fill: "black", stroke: "#119f4e", strokeThickness: 2 });
-  text_snake_two = this.add.text(0, 15, '', { font: "10pt Courier", fill: "black", stroke: "#119f4e", strokeThickness: 1 });
+  text_snake_one = this.add.text(0, 0, '', { font: "10pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
+  text_snake_two = this.add.text(0, 15, '', { font: "10pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
   
+
   cursors_for_snake1 = this.input.keyboard.createCursorKeys();
   
   cursors_for_snake2 = this.input.keyboard.addKeys(
