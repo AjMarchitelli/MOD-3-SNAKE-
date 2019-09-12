@@ -233,6 +233,7 @@ var game = new Phaser.Game(config);
 
 function preload() {
   this.load.image('food', 'assets/games/snake/rabbit.png');
+  this.load.image('tony', 'assets/games/snake/tony.png');
   this.load.image('headUp', 'assets/worm_animation/snake_head_up.png')
   this.load.image("headDown", 'assets/worm_animation/snake_head_down.png')
   this.load.image("headLeft", 'assets/worm_animation/snake_head_left.png')
@@ -248,6 +249,10 @@ function preload() {
   this.load.image("curveTopLeft", 'assets/worm_animation/snake_curve_top_left.png')
   this.load.image("curveTopRight", 'assets/worm_animation/snake_curve_top_right.png')
   this.load.image("curveTopRight", 'assets/ground_tiles/grass.jpg')
+  this.load.image('coffee', 'assets/games/snake/coffee.png');
+  this.load.image('flatiron', 'assets/games/snake/flatiron.png');
+  this.load.image('greg', 'assets/games/snake/greg.png');
+  this.load.image('questions', 'assets/games/snake/questions.png');
 }
 
 function create() {
@@ -260,7 +265,7 @@ function create() {
       function Food(scene, x, y) {
         Phaser.GameObjects.Image.call(this, scene)
 
-        this.setTexture('food');
+        this.setTexture('questions');
         this.setPosition(x * 16, y * 16);
         this.setOrigin(0);
 
@@ -274,6 +279,31 @@ function create() {
       }
       
     });
+
+    var Coffee = new Phaser.Class({
+
+      Extends: Phaser.GameObjects.Image,
+  
+      initialize:
+  
+        function Coffee(scene, x, y) {
+          Phaser.GameObjects.Image.call(this, scene)
+  
+          this.setTexture('coffee');
+          this.setPosition(x * 32, y * 32);
+          this.setOrigin(0);
+  
+          this.total = 0;
+          
+          scene.children.add(this);
+        },
+        
+        eat: function (snake) {
+          this.total++;
+          snake.moveFaster(snake);
+        }
+        
+      });
     
     
     snakes = []
@@ -286,7 +316,7 @@ function create() {
 
         this.body = scene.add.group();
 
-        this.head = this.body.create(x * 16, y * 16, 'headRight');
+        this.head = this.body.create(x * 16, y * 16, 'tony');
         this.head.setOrigin(0);
 
         this.alive = true;
@@ -375,11 +405,18 @@ function create() {
         }
     },
 
+
     grow: function () {
-      var newPart = this.body.create(this.tail.x, this.tail.y, 'bodyHorizontal');
+      var newPart = this.body.create(this.tail.x, this.tail.y, 'flatiron');
 
       newPart.setOrigin(0);
     },
+
+    moveFaster: function (snake) {
+      snake.speed /=2;
+      setTimeout(function() { snake.speed *= 2; }, 5000);
+    },
+    
 
     collideWithFood: function (food) {
       if (this.head.x === food.x && this.head.y === food.y) {
@@ -396,6 +433,15 @@ function create() {
       }
       else {
         return false;
+      }
+    },
+
+    collideWithCoffee: function (coffee) {
+      if (this.head.x === coffee.x && this.head.y === coffee.y) {
+        coffee.eat(this);
+        return true;
+      } else {
+        return false
       }
     },
 
@@ -417,9 +463,12 @@ function create() {
 
   food = new Food(this, 3, 4);
 
+  coffee = new Coffee(this, 10, 2)
+
   snake = new Snake(this, 8, 8);
 
   snake_two = new Snake(this, 20, 20);
+  snake_two.head.setTexture('greg');
 
 
   text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
@@ -461,10 +510,10 @@ function update(time, delta) {
     var score_snake_one = snake.body.children.entries.length
 
     if (score_snake_two > score_snake_one){
-      line = `Snake 2 Wins! Score: ${score_snake_two}`
+      line = `Greg Wins! Score: ${score_snake_two}`
       text.setText(line);
     } else {
-      line = `Snake 1 Wins! Score: ${score_snake_one}`
+      line = `Tony 1 Wins! Score: ${score_snake_one}`
       text.setText(line);
     }
     return;
@@ -489,6 +538,8 @@ function update(time, delta) {
 
     if (snake_two.collideWithFood(food)) {
       repositionFood();
+    } else if (snake_two.collideWithCoffee(coffee)) {
+      repositionCoffee();
     }
   }
 
@@ -500,6 +551,7 @@ function update(time, delta) {
 * If there aren't any locations left, they've won!
 *
 * @method repositionFood
+  @method repositionCoffee
 * @return {boolean} true if the food was placed, otherwise false
 */
 function repositionFood() {
@@ -566,6 +618,8 @@ function repositionFood() {
 
     if (snake.collideWithFood(food)) {
       repositionFood();
+    } else if (snake.collideWithCoffee(coffee)) {
+      repositionCoffee();
     }
   }
 
@@ -577,6 +631,7 @@ function repositionFood() {
 * If there aren't any locations left, they've won!
 *
 * @method repositionFood
+  @method repositionCoffee
 * @return {boolean} true if the food was placed, otherwise false
 */
 function repositionFood() {
@@ -621,4 +676,48 @@ function repositionFood() {
     return false;
   }
 }
+
+function repositionCoffee() {
+
+  var testGrid = [];
+
+  for (var y = 0; y < 30; y++) {
+    testGrid[y] = [];
+
+    for (var x = 0; x < 40; x++) {
+      testGrid[y][x] = true;
+    }
+  }
+
+  snake.updateGrid(testGrid);
+
+  //  Purge out false positions
+  var validLocations = [];
+
+  for (var y = 0; y < 30; y++) {
+    for (var x = 0; x < 40; x++) {
+      if (testGrid[y][x] === true) {
+        //  Is this position valid for food? If so, add it here ...
+        validLocations.push({ x: x, y: y });
+      }
+    }
+  }
+
+  if (validLocations.length > 0) {
+    //  Use the RNG to pick a random food position
+    var pos = Phaser.Math.RND.pick(validLocations);
+
+    //  And place it
+    coffee.setPosition(pos.x * 16, pos.y * 16);
+
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+
+
+
 }
