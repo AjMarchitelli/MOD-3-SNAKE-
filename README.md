@@ -9,3 +9,6 @@ simply install webserver
 and open locally
 
 ```http-server```
+
+WASD to control Greg
+Arrow Keys to control Tony
