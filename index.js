@@ -222,6 +222,7 @@ var cursors_for_snake2;
 var snakeHitSnake2; 
 var snake2HitSnake;
 var text;
+var text2;
 
 //  Direction consts
 var UP = 0;
@@ -472,6 +473,7 @@ function create() {
 
 
   text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
+  text2 = this.add.text(0, 0, '', { font: "16pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
 
   
   cursors_for_snake1 = this.input.keyboard.createCursorKeys();
@@ -511,12 +513,23 @@ function update(time, delta) {
 
     if (score_snake_two > score_snake_one){
       line = `Greg Wins! Score: ${score_snake_two}`
+      line2 = 'Press Any Key to Restart'
       text.setText(line);
+      text2.setText(line2);
+      document.addEventListener('keyup', function(e){
+        if(e){window.location.reload();}
+      })
+      return;
     } else {
-      line = `Tony 1 Wins! Score: ${score_snake_one}`
+      line = `Tony Wins! Score: ${score_snake_one}`
+      line2 = 'Press Any Key to Restart'
       text.setText(line);
-    }
+      text2.setText(line2)
+      document.addEventListener('keyup', function(e){
+        if(e){window.location.reload();}
+      })
     return;
+    }
   }
 
 
