@@ -225,6 +225,7 @@ var snake_two_score_counter;
 var snake_one_score_counter;
 var text_snake_one;
 var text_snake_two;
+var text2;
 
 //  Direction consts
 var UP = 0;
@@ -480,6 +481,7 @@ function create() {
 
 
   text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
+  text2 = this.add.text(0, 30, '', { font: "16pt Courier", fill: "#6A41F3", stroke: "#119f4e", strokeThickness: 2 });
 
   text_snake_one = this.add.text(0, 0, '', { font: "10pt Courier", fill: "black", stroke: "#119f4e", strokeThickness: 2 });
   text_snake_two = this.add.text(0, 15, '', { font: "10pt Courier", fill: "black", stroke: "#119f4e", strokeThickness: 1 });
@@ -529,12 +531,23 @@ function update(time, delta) {
 
     if (score_snake_two > score_snake_one){
       line = `Greg Wins! Score: ${score_snake_two}`
+      line2 = 'Press Any Key to Restart'
       text.setText(line);
+      text2.setText(line2);
+      document.addEventListener('keyup', function(e){
+        if(e){window.location.reload();}
+      })
+      return;
     } else {
       line = `Tony Wins! Score: ${score_snake_one}`
+      line2 = 'Press Any Key to Restart'
       text.setText(line);
-    }
+      text2.setText(line2)
+      document.addEventListener('keyup', function(e){
+        if(e){window.location.reload();}
+      })
     return;
+    }
   }
 
   function checkHighScore(){
