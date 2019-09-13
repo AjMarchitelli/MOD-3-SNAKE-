@@ -42,6 +42,7 @@ function preload() {
   this.load.image('tony', 'assets/games/snake/tony.png');
   this.load.image('coffee', 'assets/games/snake/coffee.png');
   this.load.image('flatiron', 'assets/games/snake/flatiron.png');
+  this.load.image('red flatiron', 'assets/games/snake/red_flatiron.png');
   this.load.image('greg', 'assets/games/snake/greg.png');
   this.load.image('questions', 'assets/games/snake/questions.png');
   this.load.image('aj', 'assets/games/students/aj.png');
@@ -204,6 +205,11 @@ function create() {
         }
     },
 
+    growFast: function () {
+      var newPart = this.body.create(this.tail.x, this.tail.y, 'red flatiron');
+
+      newPart.setOrigin(0);
+    },
 
     grow: function () {
       var newPart = this.body.create(this.tail.x, this.tail.y, 'flatiron');
@@ -212,21 +218,36 @@ function create() {
     },
 
     moveFaster: function (snake) {
+      kids = snake.body.children.entries.slice(1)
+
       snake.speed /=2;
-      setTimeout(function() { snake.speed *= 2; }, 5000);
+      
+      setTimeout(function() { snake.speed *= 2; check();}, 5000);
+
+      kids.forEach((kid => {kid.setTexture('red flatiron')}))
+      
+      function check(){
+        kids = snake.body.children.entries.slice(1);
+        if(snake.speed === 100) {
+          kids.forEach((kid => {kid.setTexture('flatiron')}))
+        } else {
+          kids.forEach((kid => {kid.setTexture('red flatiron')}))
+        }
+      }  
+
     },
+
     
 
     collideWithFood: function (food) {
       if (this.head.x === food.x && this.head.y === food.y) {
-        this.grow();
+        if(this.speed === 100){this.grow();}
+        else {this.growFast();}
+        
+        //this.grow();
 
         food.eat();
 
-        //  For every 5 items of food eaten we'll increase the snake speed a little
-        if (this.speed > 20 && food.total % 5 === 0) {
-          this.speed -= 5;
-        }
 
         return true;
       }
