@@ -304,7 +304,7 @@ function create() {
   text2 = this.add.text(170, 40, '', { font: "16pt Courier", fill: "white", stroke: "black", strokeThickness: 2 });
 
   text_snake_one = this.add.text(3, 0, '', { font: "15pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
-  text_snake_two = this.add.text(3, 15, '', { font: "15pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
+  text_snake_two = this.add.text(475, 0, '', { font: "15pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
   
 
   cursors_for_snake1 = this.input.keyboard.createCursorKeys();
