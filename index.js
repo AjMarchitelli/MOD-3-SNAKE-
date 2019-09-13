@@ -28,6 +28,7 @@ var text_snake_two;
 var text2;
 var students;
 var item;
+var music;
 
 //  Direction consts
 var UP = 0;
@@ -53,6 +54,7 @@ function preload() {
   this.load.image('alyssa', 'assets/games/students/alyssa.png');
   this.load.image('val', 'assets/games/students/val.png');
   this.load.image('andrew', 'assets/games/students/andrew.png');
+
 }
 
 function create() {
@@ -293,11 +295,13 @@ function create() {
   snake_two_score_counter = snake_two.body.children.entries.length -1
   snake_one_score_counter = snake.body.children.entries.length -1
 
+  
+
   // bomb = new Food(this, 7, 18)
 
 
   text = this.add.text(100, 380, '', { font: "30pt Courier", fill: "white", stroke: "black", strokeThickness: 2 });
-  text2 = this.add.text(150, 40, '', { font: "16pt Courier", fill: "white", stroke: "black", strokeThickness: 2 });
+  text2 = this.add.text(170, 40, '', { font: "16pt Courier", fill: "white", stroke: "black", strokeThickness: 2 });
 
   text_snake_one = this.add.text(3, 0, '', { font: "15pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
   text_snake_two = this.add.text(3, 15, '', { font: "15pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
@@ -347,30 +351,30 @@ function update(time, delta) {
     var score_snake_one = snake.body.children.entries.length
 
     if (score_snake_two > score_snake_one){
-      line = `Greg Wins! Score:${score_snake_two}`
-      line2 = 'Press Any Key to Restart'
+      line = `Greg Wins! Score:${score_snake_two -1}`
+      line2 = 'Press Enter to Restart'
       text.setText(line);
       text2.setText(line2);
       document.addEventListener('keyup', function(e){
-        if(e){window.location.reload();}
+        if(e.keyCode === 13){window.location.reload();}
       })
       return;
     } else if(score_snake_one > score_snake_two) {
-      line = `Tony Wins! Score:${score_snake_one}`
-      line2 = 'Press Any Key to Restart'
+      line = `Tony Wins! Score:${score_snake_one -1}`
+      line2 = 'Press Enter to Restart'
       text.setText(line);
       text2.setText(line2)
       document.addEventListener('keyup', function(e){
-        if(e){window.location.reload();}
+        if(e.keyCode === 13){window.location.reload();}
       })
     return;
     } else {
       line = `Draw! Play Again`
-      line2 = 'Press Any Key to Restart'
+      line2 = 'Press Enter to Restart'
       text.setText(line);
       text2.setText(line2)
       document.addEventListener('keyup', function (e) {
-        if (e) { window.location.reload(); }
+        if (e.keyCode === 13) { window.location.reload(); }
       })
       return;
     }
