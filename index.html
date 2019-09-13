@@ -3,8 +3,10 @@
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.19.0/dist/phaser.js"></script>
 </head>
 <body>
-  <h1>Flatiron's Sneaky Snake</h1>
-  <h5>The teacher to answer the most student questions before their untimely demise wins the game!<br> Avoide running into yourself and the other teacher at all costs and dont forget to use coffee to power up! </h5>
+  <h1>SNAKE</h1>
+  <h1>5N4K3</h1>
+  <h5>The teacher to answer the most student questions before their untimely demise wins the game!<br> Avoid running into yourself and the other teacher at all costs <br> dont forget to use coffee to power up!</h5>
+  <h4>>Controls: Arrow keys to play as Tony, WASD to play as Greg< </h4>
   <script src="boundaries.js"></script>
   <script src='welcome.js'></script>
  <script src="index.js"></script>
@@ -13,15 +15,25 @@
 
 
 <style>
+@font-face{
+  font-family: game;
+  src: url(assets/game.ttf);
+}
 
 body {
   background-color: black;
   text-align: center;
 }
 
-P, h5, h1 {
+h1 {
+  font-size: 60px;
   color: white;
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: game;
+  margin: 25px 25px 25px 25px;
 }
 
+h5, h4 {
+  color: white;
+  font-family: game;
+}
 </style>
