@@ -290,8 +290,8 @@ function create() {
   snake_two = new Snake(this, 20, 20);
   snake_two.head.setTexture('greg');
 
-  snake_two_score_counter = snake_two.body.children.entries.length
-  snake_one_score_counter = snake.body.children.entries.length
+  snake_two_score_counter = snake_two.body.children.entries.length -1
+  snake_one_score_counter = snake.body.children.entries.length -1
 
   // bomb = new Food(this, 7, 18)
 
@@ -355,7 +355,7 @@ function update(time, delta) {
         if(e){window.location.reload();}
       })
       return;
-    } else {
+    } else if(score_snake_one > score_snake_two) {
       line = `Tony Wins! Score:${score_snake_one}`
       line2 = 'Press Any Key to Restart'
       text.setText(line);
@@ -364,6 +364,15 @@ function update(time, delta) {
         if(e){window.location.reload();}
       })
     return;
+    } else {
+      line = `Draw! Play Again`
+      line2 = 'Press Any Key to Restart'
+      text.setText(line);
+      text2.setText(line2)
+      document.addEventListener('keyup', function (e) {
+        if (e) { window.location.reload(); }
+      })
+      return;
     }
   }
 
