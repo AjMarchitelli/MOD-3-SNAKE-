@@ -480,11 +480,11 @@ function create() {
   // bomb = new Food(this, 7, 18)
 
 
-  text = this.add.text(32, 380, '', { font: "30pt Courier", fill: "white", stroke: "#119f4e", strokeThickness: 2 });
-  text2 = this.add.text(0, 30, '', { font: "16pt Courier", fill: "white", stroke: "#119f4e", strokeThickness: 2 });
+  text = this.add.text(100, 380, '', { font: "30pt Courier", fill: "white", stroke: "black", strokeThickness: 2 });
+  text2 = this.add.text(150, 40, '', { font: "16pt Courier", fill: "white", stroke: "black", strokeThickness: 2 });
 
-  text_snake_one = this.add.text(0, 0, '', { font: "10pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
-  text_snake_two = this.add.text(0, 15, '', { font: "10pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
+  text_snake_one = this.add.text(3, 0, '', { font: "15pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
+  text_snake_two = this.add.text(3, 15, '', { font: "15pt Courier", fill: "white", stroke: "white", strokeThickness: 0 });
   
 
   cursors_for_snake1 = this.input.keyboard.createCursorKeys();
@@ -502,10 +502,10 @@ function create() {
 
 function update(time, delta) {
 
-  let stuff = `Tony current score: ${snake_one_score_counter}`
+  let stuff = `Tony score: ${snake_one_score_counter}`
   text_snake_one.setText(stuff);
 
-  let stuff_2 = `Greg current score: ${snake_two_score_counter}`
+  let stuff_2 = `Greg score: ${snake_two_score_counter}`
   text_snake_two.setText(stuff_2);
 
 
@@ -531,7 +531,7 @@ function update(time, delta) {
     var score_snake_one = snake.body.children.entries.length
 
     if (score_snake_two > score_snake_one){
-      line = `Greg Wins! Score: ${score_snake_two}`
+      line = `Greg Wins! Score:${score_snake_two}`
       line2 = 'Press Any Key to Restart'
       text.setText(line);
       text2.setText(line2);
@@ -540,7 +540,7 @@ function update(time, delta) {
       })
       return;
     } else {
-      line = `Tony Wins! Score: ${score_snake_one}`
+      line = `Tony Wins! Score:${score_snake_one}`
       line2 = 'Press Any Key to Restart'
       text.setText(line);
       text2.setText(line2)
@@ -549,10 +549,6 @@ function update(time, delta) {
       })
     return;
     }
-  }
-
-  function checkHighScore(){
-    fetch('localhost:')
   }
 
 
