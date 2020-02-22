@@ -5,7 +5,6 @@ simply install webserver
 
 ```npm i http-server```
 
-
 and open locally
 
 ```http-server```
